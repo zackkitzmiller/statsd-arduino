@@ -13,7 +13,7 @@ public:
   void increment(const char *metric);
   void decrement(const char *metric);
 private:
-  void _send(char *msg);
+  void _send(const char *metric, const char *cmd);
   IPAddress _ip;
   int _port;
   int _localPort;

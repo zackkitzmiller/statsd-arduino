@@ -15,24 +15,21 @@ StatsD::StatsD(IPAddress ip, int port, int localPort)
 }
 
 void StatsD::increment(const char *metric) {
-  int buffer_len = sizeof(&metric) + 4;
-  char buffer[buffer_len];
-  strcpy(buffer, metric);
-  strcat(buffer,":1|c");
-  StatsD::_send(buffer);
+  StatsD::_send(metric, ":1|c");
 }
 
 void StatsD::decrement(const char *metric) {
+  StatsD::_send(metric, ":-1|c");
+}
+
+void StatsD::_send(const char *metric, const char *cmd) {
   int buffer_len = sizeof(&metric) + 4;
   char buffer[buffer_len];
   strcpy(buffer, metric);
-  strcat(buffer,":-1|c");
-  StatsD::_send(buffer);
-}
+  strcat(buffer, cmd);
 
-void StatsD::_send(char *msg) {
-  const uint8_t* nmsg = (uint8_t*)msg;
+  const uint8_t* msg = (uint8_t*)buffer;
   statsd.beginPacket(_ip, _port);
-  statsd.write(nmsg, sizeof(&msg));
+  statsd.write(msg, sizeof(&msg));
   statsd.endPacket();
 }
