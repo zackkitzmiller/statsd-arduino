@@ -11,7 +11,7 @@ StatsD::StatsD(IPAddress ip, int port, int localPort)
 {
   _ip = ip;
   _port = port;
-  _localPort = localPort;
+  statsd.begin(localPort);
 }
 
 void StatsD::increment(const char *metric) {
