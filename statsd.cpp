@@ -22,6 +22,14 @@ void StatsD::decrement(const char *metric) {
   StatsD::_send(metric, ":-1|c");
 }
 
+void StatsD::timing(const char *metric, int ms) {
+  char timing[sizeof(&metric) + 20];
+  strcpy(timing, metric);
+  strcat(timing, ":");
+  strcat(timing, (char*)ms);
+  StatsD::_send(timing, "|ms");
+}
+
 void StatsD::_send(const char *metric, const char *cmd) {
   int buffer_len = sizeof(&metric) + 4;
   char buffer[buffer_len];
