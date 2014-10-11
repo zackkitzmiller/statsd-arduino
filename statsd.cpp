@@ -30,6 +30,24 @@ void StatsD::timing(const char *metric, int ms) {
   StatsD::_send(timing, "|ms");
 }
 
+void StatsD::gauge(const char *metric, int gaugeValue)
+{
+  char gauge[sizeof(&metric) + 20];
+  strcpy(gauge, metric);
+  strcat(gauge, ":");
+  strcat(gauge, (char*)gaugeValue);
+  StatsD::_send(gauge, "|g");
+}
+
+void StatsD::sets(const char *metric, int setsValue)
+{
+  char sets[sizeof(&metric) + 20];
+  strcpy(sets, metric);
+  strcat(sets, ":");
+  strcat(sets, (char*)setsValue);
+  StatsD::_send(sets, "|s");
+}
+
 void StatsD::_send(const char *metric, const char *cmd) {
   int buffer_len = sizeof(&metric) + 4;
   char buffer[buffer_len];
