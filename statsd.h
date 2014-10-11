@@ -13,6 +13,8 @@ public:
   void increment(const char *metric);
   void decrement(const char *metric);
   void timing(const char *metric, int ms);
+  void gauge(const char *metric, int gaugeValue);
+  void sets(const char *metric, int setsValue);
 private:
   void _send(const char *metric, const char *cmd);
   IPAddress _ip;
