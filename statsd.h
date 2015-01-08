@@ -16,10 +16,9 @@ public:
   void gauge(const char *metric, int gaugeValue);
   void sets(const char *metric, int setsValue);
 private:
-  void _send(const char *metric, const char *cmd);
+  void _send(const char *metric, int value, const char *cmd);
   IPAddress _ip;
   int _port;
-  int _localPort;
 };
 
 #endif
